@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+	<button onclick="click()">点击事件</button>
+
+
+	<script type="text/javascript">
+	function click(){
+		debugger;
+		throttle(run, 500, 500)(33);
+
+	}
+	function run(agrs){
+		console.log(agrs);
+	}
+
+	function throttle (func, mustRun, wait) {
+	    let timeout,
+	        startTime = new Date();
+	    return function () {
+	        let that = this,  
+	            args = arguments,
+	            curTime = new Date();
+	        clearTimeout(timeout);
+	        // 如果达到了时间间隔，触发 handler
+	        // 如果没有，设置一个延时，假设为最后一次
+	        if (curTime - startTime >= mustRun) {
+	            func.apply(that, args);
+	            startTime = curTime;
+	        } else {
+	            // 没达到触发间隔，重新设定定时器 ，
+	            // 保证不丢失最后一次触发，如果中间再触发，会在之前被clear掉
+	            timeout = setTimeout(func, wait);
+	        }
+	    };
+	}
+</script>
+</body>
+
+
+
+
+
+
+
+</html>
